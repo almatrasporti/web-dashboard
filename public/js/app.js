@@ -1899,6 +1899,82 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Forecast.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Forecast.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Forecast",
+  data: function data() {
+    return {
+      data: [],
+      input_string: '12660,11880,11100,9100,7600,6050,4500,5600,6000,6400,6575,6750,6925,7100,6775,6450,6125,5200,5433.33333333,5666.66666667,6125,5670,5215,4760,4305,3850,5725,7600,9166.66666667,10733.33333333',
+      predicted_value: null,
+      processing: false
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    forecast: function forecast() {
+      var _this = this;
+
+      this.processing = true;
+      this.data = this.input_string.split(",").map(function (val) {
+        return parseFloat(val.trim());
+      });
+      axios.post("http://35.184.176.151:5000", {
+        "values": this.data
+      }, {
+        headers: {
+          // Overwrite Axios's automatically set Content-Type
+          'Content-Type': 'application/json'
+        }
+      }).then(function (response) {
+        _this.predicted_value = response.data.prediction;
+        _this.processing = false;
+      })["catch"](function (error) {
+        _this.predicted_value = error;
+        _this.processing = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GMap.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GMap.vue?vue&type=script&lang=js& ***!
@@ -39648,6 +39724,92 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Forecast.vue?vue&type=template&id=03ed69e6&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Forecast.vue?vue&type=template&id=03ed69e6&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "mb-2" }, [
+    _c("div", { staticClass: "flex flex-row" }, [
+      _c("div", { staticClass: "w-full" }, [
+        _c("div", { staticClass: "flex flex-col" }, [
+          _c("span", { staticClass: "pr-2 font-bold" }, [
+            _vm._v("Time series:")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-full" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.input_string,
+                  expression: "input_string"
+                }
+              ],
+              staticStyle: { width: "100%" },
+              attrs: { cols: "100", rows: "6", id: "input_data" },
+              domProps: { value: _vm.input_string },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.input_string = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.processing
+          ? _c("div", { staticClass: "flex flex-row" }, [
+              _c("img", {
+                staticStyle: { width: "32px" },
+                attrs: { src: "/img/spinner.gif" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "pl-2 my-auto" }, [
+                _vm._v("Predicting data...")
+              ])
+            ])
+          : _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center",
+                  on: { click: _vm.forecast }
+                },
+                [_vm._v("Predict\n                ")]
+              ),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "pr-2",
+                domProps: { textContent: _vm._s(_vm.predicted_value) }
+              })
+            ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GMap.vue?vue&type=template&id=0450b3e0&":
 /*!*******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GMap.vue?vue&type=template&id=0450b3e0& ***!
@@ -56903,6 +57065,7 @@ Vue.component('mb-map', __webpack_require__(/*! ./components/MbMap.vue */ "./res
 Vue.component('g-map', __webpack_require__(/*! ./components/GMap.vue */ "./resources/js/components/GMap.vue")["default"]);
 Vue.component('select-vehicle', __webpack_require__(/*! ./components/SelectVehicle.vue */ "./resources/js/components/SelectVehicle.vue")["default"]);
 Vue.component('reset-redis', __webpack_require__(/*! ./components/ResetRedis.vue */ "./resources/js/components/ResetRedis.vue")["default"]);
+Vue.component('forecast', __webpack_require__(/*! ./components/Forecast.vue */ "./resources/js/components/Forecast.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -56958,6 +57121,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Forecast.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Forecast.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Forecast_vue_vue_type_template_id_03ed69e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Forecast.vue?vue&type=template&id=03ed69e6&scoped=true& */ "./resources/js/components/Forecast.vue?vue&type=template&id=03ed69e6&scoped=true&");
+/* harmony import */ var _Forecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Forecast.vue?vue&type=script&lang=js& */ "./resources/js/components/Forecast.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Forecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Forecast_vue_vue_type_template_id_03ed69e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Forecast_vue_vue_type_template_id_03ed69e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "03ed69e6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Forecast.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Forecast.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Forecast.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Forecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Forecast.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Forecast.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Forecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Forecast.vue?vue&type=template&id=03ed69e6&scoped=true&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/Forecast.vue?vue&type=template&id=03ed69e6&scoped=true& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Forecast_vue_vue_type_template_id_03ed69e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Forecast.vue?vue&type=template&id=03ed69e6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Forecast.vue?vue&type=template&id=03ed69e6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Forecast_vue_vue_type_template_id_03ed69e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Forecast_vue_vue_type_template_id_03ed69e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

@@ -37,6 +37,7 @@ Vue.component('mb-map', require('./components/MbMap.vue').default);
 Vue.component('g-map', require('./components/GMap.vue').default);
 Vue.component('select-vehicle', require('./components/SelectVehicle.vue').default);
 Vue.component('reset-redis', require('./components/ResetRedis.vue').default);
+Vue.component('forecast', require('./components/Forecast.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

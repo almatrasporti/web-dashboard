@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
-use function GuzzleHttp\json_decode;
 
 class StatusController extends Controller
 {
     public function __invoke()
     {
-        $resultJava = $this->checkJavaPrograms();
+        $resultJava = $this->checkJavaServices();
         $resultDocker = $this->checkDockerContainer();
         $resultServices = $this->checkServices();
 
@@ -28,15 +26,30 @@ class StatusController extends Controller
      * @throws \Symfony\Component\Process\Exception\ProcessTimedOutException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    private function checkJavaPrograms()
+    private function checkJavaServices()
     {
-        $processes = ['Injector', 'ETL_L1', 'ETL_L2', 'ETL_L3'];
+        $processes = ['injector', 'ETL_L1', 'ETL_L2', 'ETL_L3'];
         foreach ($processes as $process) {
-            $processCmd = new Process(['jcmd', $process]);
+            $processCmd = new Process(['jcmd', '-l', $process]);
             $processCmd->run();
             $processCmd->wait();
 
-            $result[$process] = $processCmd->isSuccessful();
+            if ($processCmd->isSuccessful()) {
+                Log::info($processCmd->getOutput());
+                $output = $processCmd->getOutput();
+                if (strpos($output, 'almatrasporti.'. $process)) {
+                    $result[$process] = true;
+                } else {
+                    $result[$process] = false;
+                }
+            } else {
+                Log::info($processCmd->getErrorOutput());
+                $result[$process] = false;
+            }
+
+
+
+
         }
         return $result;
     }
@@ -51,6 +64,7 @@ class StatusController extends Controller
 
             if (!$processCmd->isSuccessful()) {
                 $result[$process] = false;
+                Log::info($processCmd->getErrorOutput());
             } else {
                 $output = json_decode(rtrim($processCmd->getOutput(), "\n"));
                 $result[$process] = $output[0]->State->Running;
@@ -62,13 +76,14 @@ class StatusController extends Controller
 
     private function checkServices()
     {
-        $processes = ['redis-server', 'mongodb'];
+        $processes = ['redis', 'mongod'];
         foreach ($processes as $process) {
             $processCmd = new Process(['service', $process, 'status']);
             $processCmd->run();
             $processCmd->wait();
 
             $result[$process] = $processCmd->isSuccessful();
+            Log::info($processCmd->getErrorOutput());
         }
         return $result;
     }

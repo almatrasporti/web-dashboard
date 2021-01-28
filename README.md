@@ -2,14 +2,15 @@
 
 La dashboard di Almatrasporti è una _Proof of Concept_ di un applicativo web che realizza le seguenti funzioni:
 
-- **Visualizzazione _real time_ dei dati trasmessi dai veicoli** e successivamente elaborati dai microservizi. Tale visualizzazione è realizzata mediante la rappresentazione su mappa dei percorsi tracciati dai veicoli della flotta
-  durante il loro tragitto.
+- **Visualizzazione _real time_ dei dati trasmessi dai veicoli** e successivamente elaborati dai microservizi. 
+  Tale visualizzazione è realizzata mediante la rappresentazione su mappa dei percorsi tracciati dai veicoli della 
+  flotta durante il loro tragitto.
 - **Invocazione del servizio di predizione** basato su modello di Intelligenza Artificiale  
 - **Controllo dello stato di attività dei servizi/moduli** del sistema Almatrasporti, permettendone inoltre la 
   attivazione/disattivazione mediante interfaccia grafica.
   
 
-### Tecnologie utilizzate
+## Tecnologie utilizzate
 
 L'applicativo è realizzato in due parti:
 
@@ -19,7 +20,7 @@ L'applicativo è realizzato in due parti:
 ### Modulo backend
 Il modulo di backend è scritto in linguaggio PHP mediante framework **Laravel**, e implementa le seguenti API REST:
 
-- `GET /data`: recupero da db Redis dei dati dei veicoli e delle relative posizione ed esportazione in formato Json.
+- `GET /data`: recupero da db Redis dei dati dei veicoli e delle relative posizioni, esportati in formato Json.
 - `DELETE /data`: Cancella tutti i dati da Redis/MongoDB.
   
 

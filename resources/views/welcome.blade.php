@@ -61,12 +61,6 @@
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="/forecast"
-                           class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-pink-500">
-                            <i class="fas fa-eye fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Forecast</span>
-                        </a>
-                    </li>
-                    <li class="mr-6 my-2 md:my-0">
                         <reset-redis/>
                     </li>
                 </ul>
@@ -136,6 +130,24 @@
 {{--                </div>--}}
 
 
+            </div>
+
+            <hr class="border-b-2 border-gray-400 my-8 mx-4">
+
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="w-full p-3">
+                    <!--Table Card-->
+                    <div class="bg-white border rounded shadow">
+                        <div class="border-b p-3">
+                            <h5 class="font-bold uppercase text-gray-600">Consumption Forecasting</h5>
+                        </div>
+                        <div class="p-5">
+                            <forecast/>
+                        </div>
+                    </div>
+                    <!--/table Card-->
+                </div>
             </div>
 
             <!--/ Console Content-->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
 class ServiceController extends Controller
@@ -10,11 +11,11 @@ class ServiceController extends Controller
     public function start(Request $request)
     {
         $processCmd = new Process(['sh', config('app.cmd_path'). $request->service . '.sh', config('app.cmd_path')]);
+        $processCmd->setTimeout(300);
         $processCmd->start();
-//        $processCmd->wait();/
-//        $res = $processCmd->getOutput();
-//
-//        return $res;
+        $processCmd->wait();
+        Log::info($processCmd->getOutput());
+        Log::info($processCmd->getErrorOutput());
 
     }
 
