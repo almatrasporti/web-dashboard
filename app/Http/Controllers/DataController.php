@@ -24,6 +24,7 @@ class DataController extends Controller
 
         $res = [];
 
+        sort($vehicles);
         foreach ($vehicles as $i => $vehicle) {
             foreach ($data[$i+sizeof($vehicles)] as &$datum) {
                 $datum = json_decode($datum);

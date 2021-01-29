@@ -15,24 +15,28 @@
                                 class="fas fa-caret-up"></i></span>
 
                             </h3>
-                            <button @click="kill(service)"
-                                    class="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
-                                <span class="mr-2">Kill</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-                                </svg>
-                            </button>
+                            <div v-if="canBeManaged(service)">
+                                <button @click="kill(service)"
+                                        class="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                                    <span class="mr-2">Kill</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div v-else>
                             <h3 class="font-bold text-3xl">KO <span class="text-red-500"><i
                                 class="fas fa-caret-down"></i></span></h3>
-                            <button @click="start(service)"
-                                    class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
-                                <span class="mr-2">Start</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-                                </svg>
-                            </button>
+                            <div v-if="canBeManaged(service)">
+                                <button @click="start(service)"
+                                        class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                                    <span class="mr-2">Start</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -47,12 +51,13 @@
 import {EventBus} from "../event-bus";
 
 export default {
-    name: "VehicleTable",
+    name: "Widgets",
     data() {
         return {
             bus: EventBus,
             services: [],
             loading: false,
+            manageableServices: ['injector', 'ETL_L1', 'ETL_L2', 'ETL_L3']
         }
     },
     mounted() {
@@ -80,6 +85,16 @@ export default {
             axios
                 .delete('/service', {headers: {}, data: {service: service}})
                 .then(response => this.update(response.data))
+        },
+
+        canBeManaged: function(service) {
+            for(var i = 0; i < this.manageableServices.length; i++) {
+                if (this.manageableServices[i] == service) {
+                    return true
+                }
+            }
+
+            return false
         }
     }
 }
